@@ -4,7 +4,17 @@ from __future__ import annotations
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorEntityDescription, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, UnitOfTemperature, UnitOfDensity
+from homeassistant.const import PERCENTAGE, UnitOfTemperature
+
+# Home Assistant compatibility: older Core releases use the legacy constant.
+# Core versions that provide UnitOfDensity use the new enum.
+try:
+    from homeassistant.const import UnitOfDensity
+except ImportError:
+    from homeassistant.const import CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
+    PM_MASS_UNIT = CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
+else:
+    PM_MASS_UNIT = UnitOfDensity.MICROGRAMS_PER_CUBIC_METER
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
@@ -28,12 +38,12 @@ SENSORS: tuple[SensorEntityDescription, ...] = (
     ),
     SensorEntityDescription(
         key="pm25", name="PM2.5", device_class=SensorDeviceClass.PM25,
-        native_unit_of_measurement=UnitOfDensity.MICROGRAMS_PER_CUBIC_METER,
+        native_unit_of_measurement=PM_MASS_UNIT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="pm10", name="PM10", device_class=SensorDeviceClass.PM10,
-        native_unit_of_measurement=UnitOfDensity.MICROGRAMS_PER_CUBIC_METER,
+        native_unit_of_measurement=PM_MASS_UNIT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
