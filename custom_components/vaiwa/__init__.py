@@ -6,6 +6,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.importlib import async_import_module
 
 from .api import VaiwaCloudClient
 from .const import DOMAIN, FIREBASE_API_KEY, FIREBASE_UID, PUBLIC_FIREBASE_WEB_API_KEY, REFRESH_TOKEN
@@ -47,6 +48,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             registry.async_remove(item.entity_id)
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+
+    # HA 2026.x: pre-load platform modules without blocking the event loop.
+    # This avoids a synchronous import_module() call during platform forwarding.
+    for platform in PLATFORMS:
+        await async_import_module(hass, f"{__package__}.{platform}")
+
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
