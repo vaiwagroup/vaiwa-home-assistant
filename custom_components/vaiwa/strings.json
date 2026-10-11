@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect VAIWA account",
+        "description": "Sign in with your VAIWA account. VAIWA manages the connection to Firebase.",
+        "data": {
+          "email": "VAIWA email",
+          "password": "VAIWA password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Wrong credentials or email/password sign-in is not enabled",
+      "cannot_connect": "Could not reach Firebase. Check your internet connection.",
+      "not_configured": "Integration not configured. Contact VAIWA support."
+    },
+    "abort": {
+      "already_configured": "This VAIWA account is already connected"
+    }
+  }
+}

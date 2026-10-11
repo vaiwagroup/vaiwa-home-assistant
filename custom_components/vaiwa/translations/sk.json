@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pripojiť účet VAIWA",
+        "description": "Prihlás sa svojím VAIWA účtom. Firebase nastavenia spravuje VAIWA.",
+        "data": {
+          "email": "E-mail VAIWA",
+          "password": "Heslo VAIWA"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Neplatné údaje alebo nie je povolené prihlásenie e-mailom a heslom",
+      "cannot_connect": "Firebase nie je dostupný. Skontroluj internetové pripojenie.",
+      "not_configured": "Integrácia nie je pripravená. Kontaktuj vývojára VAIWA."
+    },
+    "abort": {
+      "already_configured": "Tento účet VAIWA je už pripojený"
+    }
+  }
+}
